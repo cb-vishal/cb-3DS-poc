@@ -17,7 +17,7 @@ $requestBody = json_encode(array(
     '3ds' => array(
         'enabled' => true,
     ),
-    'amount' => 100,
+    'amount' => 25,
     'currency' => 'USD',
     'reference' => 'order-123',
     'success_url' => 'http://gooogle.com/success',
@@ -43,7 +43,7 @@ curl_close($ch);
 
 $apiResponseBody = json_decode($server_output);
 $redirectionURL = $apiResponseBody->_links->redirect->href;
-
+echo $redirectionURL;
 // Redirect user to the 3DS Redirection URL
 header("Location: ".$redirectionURL); 
 

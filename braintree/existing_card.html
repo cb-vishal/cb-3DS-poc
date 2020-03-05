@@ -75,13 +75,13 @@
     </div>
 </div>
 <script src="jquery.js"></script>
-<script src="https://js.braintreegateway.com/web/3.48.0/js/client.min.js"></script>
+<script src="https://js.braintreegateway.com/web/3.50.1/js/client.min.js"></script>
 
 <!-- Load the Hosted Fields component.. -->
-<script src="https://js.braintreegateway.com/web/3.48.0/js/hosted-fields.min.js"></script>
+<script src="https://js.braintreegateway.com/web/3.50.1/js/hosted-fields.min.js"></script>
 
 <!-- Load the 3D Secure component. -->
-<script src="https://js.braintreegateway.com/web/3.48.0/js/three-d-secure.min.js"></script>
+<script src="https://js.braintreegateway.com/web/3.50.1/js/three-d-secure.min.js"></script>
 
 
 
@@ -161,9 +161,12 @@
         event.preventDefault();
         payBtn.attr('disabled', 'disabled');
         payBtn.val('Processing...');
+let headers = new Headers(); headers.append('Content-Type', 'application/json'); 
+headers.append('Accept', 'application/json'); headers.append('Access-Control-Allow-Origin', 'http://localhost:4567'); 
+headers.append('Access-Control-Allow-Credentials', 'true'); headers.append('GET', 'POST', 'OPTIONS');
         fetch('http://localhost:4567/braintree/nonce', {
                  method: 'POST',
-                 headers: { 'Content-Type': 'application/json' },
+
                   body: JSON.stringify({ card_token: cardToken.val()})
                }).then(function(result){
                 result.json().then(function(json){

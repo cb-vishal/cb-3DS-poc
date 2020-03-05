@@ -1,0 +1,82 @@
+<html>
+  <head>
+      <script src="https://js.stripe.com/v3/"></script>
+  </head>
+  <body>
+    <div id="payment-request-button">
+      test
+      <!-- A Stripe Element will be inserted here. -->
+    </div>
+    <script>
+      var stripe = Stripe('pk_test_oGruwGMv0gUQ3jlaLRYSOpgr');
+
+      var paymentRequest = stripe.paymentRequest({
+        country: 'US',
+        currency: 'usd',
+        total: {
+          label: 'Demo total',
+          amount: 100,
+        },
+        requestPayerName: true,
+        requestPayerEmail: true,
+      });
+
+      console.log(paymentRequest);
+    
+      var elements = stripe.elements();
+      var prButton = elements.create('paymentRequestButton', {
+        paymentRequest: paymentRequest,
+      });
+      
+      // Check the availability of the Payment Request API first.
+      paymentRequest.canMakePayment().then(function(result) {
+        console.log(result);
+        if (result) {
+          prButton.mount('#payment-request-button');
+        } else {
+          document.getElementById('payment-request-button').style.display = 'none';
+        }
+      });
+
+      paymentRequest.on('paymentmethod', function(pm_object) {
+        fetch('https://c0a1a61e.ngrok.io/ajax/confirm_payment', {
+             method: 'POST',
+             headers: { 'Content-Type': 'application/json' },
+             body: JSON.stringify({ payment_method_id: pm_object.paymentMethod.id })
+           }).then(function(result) {
+             // Handle server response (see Step 3)
+             result.json().then(function(json) {
+               handleServerResponse(json);
+             })
+           });
+        console.log(pm_object.paymentMethod);
+      });
+  function handleServerResponse(response) {
+  if (response.error) {
+    console.log(response.error);
+    // Show error from server on payment form
+  } else if (response.requires_action) {
+    // Use Stripe.js to handle required card action
+    handleAction(response);
+  } else {
+
+    console.log("payment_intent_id: ", response.payment_intent_id, "success: ", response.success);
+    // Show success message
+  }
+}
+
+function handleAction(response) {
+  stripe.handleCardAction(
+    response.payment_intent_client_secret
+  ).then(function(result) {
+    if (result.error) {
+      // Show error in payment form
+    } else {
+      
+      console.log(result);
+    }
+  });
+}
+    </script>
+  </body>
+</html>

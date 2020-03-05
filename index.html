@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout Frames v2: 1-liner</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <form id="payment-form" method="POST" action="server/server.php">
+    <div class="one-liner">
+      <div>
+        <input type="text" name="" placeholder="FirstName">
+        <input type="text" name="" placeholder="LastName">
+      </div>
+      <div class="card-frame"></div>
+      <button id="pay-button" disabled>
+        PAY GBP 24.99
+      </button>
+    </div>
+    <p class="error-message"></p>
+    <p class="success-payment-message"></p>
+  </form>
+
+  <script src="https://cdn.checkout.com/js/framesv2.min.js"></script>
+  <script src="app.js"></script>
+
+</body>
+
+</html>

@@ -40,7 +40,8 @@ get '/braintree/client_token' do
  response =  Braintree::ClientToken.generate(
   :merchant_account_id => 'cb'
  )
-return [200, {'Content-Type' => 'application/json'}, response]
+return [200, {'Content-Type' => 'application/json', "Access-Control-Allow-Origin" => "*", 
+"Access-Control-Allow-Credentials" => "true" }, response]
 end
 
 post '/braintree/sale' do
