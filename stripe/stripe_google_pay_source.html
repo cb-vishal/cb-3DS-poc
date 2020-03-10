@@ -42,6 +42,7 @@
 
       paymentRequest.on('source', function(pm_object) {
         console.log(pm_object.source);
+        console.log("source id" + pm_object.source.id);
         var x = document.getElementById("source");
         x.innerHTML=pm_object.source.id;
           x.style.display = "block";
