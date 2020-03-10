@@ -45,7 +45,46 @@
         var x = document.getElementById("pm");
         x.innerHTML=pm_object.paymentMethod.id;
           x.style.display = "block";
+
+
+          fetch('https://c0a1a61e.ngrok.io/ajax/confirm_payment', { 
+             method: 'POST',  
+             headers: { 'Content-Type': 'application/json' }, 
+             body: JSON.stringify({ payment_method_id: pm_object.paymentMethod.id })  
+           }).then(function(result) { 
+             // Handle server response (see Step 3) 
+             result.json().then(function(json) {  
+               handleServerResponse(json);  
+             }) 
+           });
       });
+
+       function handleServerResponse(response) {  
+  if (response.error) { 
+    console.log(response.error);  
+    // Show error from server on payment form 
+  } else if (response.requires_action) {  
+    // Use Stripe.js to handle required card action 
+    handleAction(response); 
+  } else {  
+
+    console.log("payment_intent_id: ", response.payment_intent_id, "success: ", response.success);  
+    // Show success message 
+  } 
+} 
+
+function handleAction(response) { 
+  stripe.handleCardAction(  
+    response.payment_intent_client_secret 
+  ).then(function(result) { 
+    if (result.error) { 
+      // Show error in payment form 
+    } else {  
+
+      console.log(result);  
+    } 
+  }); 
+}
   
     </script>
   </body>
