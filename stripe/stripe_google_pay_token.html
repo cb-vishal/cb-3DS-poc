@@ -7,7 +7,7 @@
       test
       <!-- A Stripe Element will be inserted here. -->
     </div>
-    <div id="pm" style="display: block;">
+    <div id="token" style="display: none">
     </div>
     <script>
       var stripe = Stripe('pk_test_oGruwGMv0gUQ3jlaLRYSOpgr');
@@ -40,10 +40,10 @@
         }
       });
 
-      paymentRequest.on('paymentmethod', function(pm_object) {
-        console.log(pm_object.paymentMethod);
-        var x = document.getElementById("pm");
-        x.innerHTML=pm_object.paymentMethod;
+      paymentRequest.on('token', function(pm_object) {
+        console.log(pm_object.token);
+        var x = document.getElementById("token");
+        x.innerHTML=pm_object.token;
           x.style.display = "block";
       });
   
