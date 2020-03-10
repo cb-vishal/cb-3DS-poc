@@ -43,7 +43,7 @@
       paymentRequest.on('token', function(pm_object) {
         console.log(pm_object.token);
         var x = document.getElementById("token");
-        x.innerHTML=pm_object.token;
+        x.innerHTML=pm_object.token.id;
           x.style.display = "block";
       });
   

@@ -43,7 +43,7 @@
       paymentRequest.on('paymentmethod', function(pm_object) {
         console.log(pm_object.paymentMethod);
         var x = document.getElementById("pm");
-        x.innerHTML=pm_object.paymentMethod;
+        x.innerHTML=pm_object.paymentMethod.id;
           x.style.display = "block";
       });
   

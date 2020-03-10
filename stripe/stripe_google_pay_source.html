@@ -41,9 +41,9 @@
       });
 
       paymentRequest.on('source', function(pm_object) {
-        console.log(pm_object.paymentMethod);
+        console.log(pm_object.source);
         var x = document.getElementById("source");
-        x.innerHTML=pm_object.source;
+        x.innerHTML=pm_object.source.id;
           x.style.display = "block";
       });
   
